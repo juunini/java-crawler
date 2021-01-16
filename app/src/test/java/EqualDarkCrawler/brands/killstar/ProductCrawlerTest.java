@@ -155,4 +155,30 @@ public class ProductCrawlerTest {
 
         assertEquals("Milky Way Babydoll Dress", name);
     }
+
+    @Test
+    public void saleProductGetPrice() throws Exception {
+        setSaleProductServer();
+
+        ProductCrawler crawler = new ProductCrawler();
+        crawler.getDocument("http://localhost:" + PORT);
+        float price = crawler.getPrice();
+        float salePrice = crawler.getSalePrice();
+
+        assertEquals(39.99f, price);
+        assertEquals(29.99f, salePrice);
+    }
+
+    @Test
+    public void noSaleProductGetPrice() throws Exception {
+        setNoSaleProductServer();
+
+        ProductCrawler crawler = new ProductCrawler();
+        crawler.getDocument("http://localhost:" + PORT);
+        float price = crawler.getPrice();
+        float salePrice = crawler.getSalePrice();
+
+        assertEquals(29.99f, price);
+        assertEquals(29.99f, salePrice);
+    }
 }

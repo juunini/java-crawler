@@ -2,8 +2,8 @@ package EqualDarkCrawler.brands.killstar;
 
 import EqualDarkCrawler.crawler.HTTPCrawler;
 import EqualDarkCrawler.crawler.Size;
+import EqualDarkCrawler.utils.GetFloatFromText;
 import org.jsoup.select.Elements;
-import org.jsoup.select.Selector;
 
 public class ProductCrawler extends HTTPCrawler implements EqualDarkCrawler.crawler.ProductCrawler {
     @Override
@@ -30,12 +30,20 @@ public class ProductCrawler extends HTTPCrawler implements EqualDarkCrawler.craw
 
     @Override
     public float getPrice() {
-        return 0;
+        String priceStr = this.doc
+                .select("[data-price-wrapper] .money")
+                .first()
+                .text();
+        return new GetFloatFromText().insert(priceStr);
     }
 
     @Override
     public float getSalePrice() {
-        return 0;
+        String priceStr = this.doc
+                .select("[data-price-wrapper] .money")
+                .last()
+                .text();
+        return new GetFloatFromText().insert(priceStr);
     }
 
     @Override
