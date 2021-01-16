@@ -144,4 +144,15 @@ public class ProductCrawlerTest {
 
         assertTrue(isSoldOut);
     }
+
+    @Test
+    public void getName() throws Exception {
+        setSaleProductServer();
+
+        ProductCrawler crawler = new ProductCrawler();
+        crawler.getDocument("http://localhost:" + PORT);
+        String name = crawler.getName();
+
+        assertEquals("Milky Way Babydoll Dress", name);
+    }
 }

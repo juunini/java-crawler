@@ -22,7 +22,10 @@ public class ProductCrawler extends HTTPCrawler implements EqualDarkCrawler.craw
 
     @Override
     public String getName() {
-        return null;
+        return this.doc
+                .select("[uk-grid] h2")
+                .first()
+                .text();
     }
 
     @Override
