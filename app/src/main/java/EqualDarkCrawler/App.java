@@ -3,12 +3,79 @@
  */
 package EqualDarkCrawler;
 
+import EqualDarkCrawler.crawler.ListCrawler;
+import EqualDarkCrawler.crawler.ProductCrawler;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
+
 public class App {
-    public String getGreeting() {
-        return "Hello World!";
+    public static List<String> getProductsURL() throws Exception {
+        Map<String, ListCrawler> crawlers = new HashMap<>();
+        crawlers.put("killstar", new EqualDarkCrawler.brands.killstar.ListCrawler());
+
+        Scanner scan = new Scanner(System.in);
+        System.out.print("브랜드를 입력해주세요. [killstar]: ");
+        String brand = scan.nextLine();
+
+        System.out.print("크롤링 할 주소를 입력해주세요: ");
+        String targetURL = scan.nextLine();
+
+        scan.close();
+
+        ListCrawler listCrawler = crawlers.get(brand);
+        listCrawler.setTargetURL(targetURL);
+
+        return listCrawler.getProductsURL();
     }
 
-    public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
+    public static void getProduct() throws Exception {
+        Map<String, ProductCrawler> crawlers = new HashMap<>();
+        crawlers.put("killstar", new EqualDarkCrawler.brands.killstar.ProductCrawler());
+
+        Scanner scan = new Scanner(System.in);
+        System.out.print("브랜드를 입력해주세요. [killstar]: ");
+        String brand = scan.nextLine();
+
+        System.out.print("크롤링 할 주소를 입력해주세요: ");
+        String targetURL = scan.nextLine();
+
+        scan.close();
+
+        ProductCrawler productCrawler = crawlers.get(brand);
+        productCrawler.setTargetURL(targetURL);
+
+        boolean isValidPage = productCrawler.isValidPage();
+        if (!isValidPage) {
+            System.out.println("invalid page");
+            System.exit(0);
+        }
+
+        boolean isSoldOut = productCrawler.isSoldOut();
+        String name = productCrawler.getName();
+        float price = productCrawler.getPrice();
+        float salePrice = productCrawler.getSalePrice();
+
+        System.out.printf("soldout : %b\n", isSoldOut);
+        System.out.printf("name : %s\n", name);
+        System.out.printf("price : %f\n", price);
+        System.out.printf("sale price : %f\n", salePrice);
+    }
+
+    public static void main(String[] args) throws Exception {
+        Scanner scan = new Scanner(System.in);
+        System.out.println("1. 제품 리스트 크롤링");
+        System.out.println("2. 제품 정보 크롤링");
+        System.out.print("번호를 선택하세요: ");
+        String selected = scan.nextLine();
+
+        if (selected.equals("1")) {
+            List<String> productsURL = getProductsURL();
+            System.out.println(productsURL);
+        } else if (selected.equals("2")) {
+            getProduct();
+        }
     }
 }
