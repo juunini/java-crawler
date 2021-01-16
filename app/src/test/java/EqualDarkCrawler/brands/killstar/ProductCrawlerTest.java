@@ -7,10 +7,11 @@ import org.junit.jupiter.api.Test;
 import org.mockserver.client.MockServerClient;
 import org.mockserver.integration.ClientAndServer;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.io.IOException;
 import java.io.InputStream;
 
-import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockserver.model.HttpRequest.request;
 import static org.mockserver.model.HttpResponse.response;
 
@@ -98,4 +99,25 @@ public class ProductCrawlerTest {
                 );
     }
 
+    @Test
+    public void successIsValidPage() throws Exception {
+        setSaleProductServer();
+
+        ProductCrawler crawler = new ProductCrawler();
+        crawler.getDocument("http://localhost:" + PORT);
+        boolean isValidPage = crawler.isValidPage();
+
+        assertTrue(isValidPage);
+    }
+
+    @Test
+    public void failedIsValidPage() throws Exception {
+        setProductsServer();
+
+        ProductCrawler crawler = new ProductCrawler();
+        crawler.getDocument("http://localhost:" + PORT);
+        boolean isValidPage = crawler.isValidPage();
+
+        assertFalse(isValidPage);
+    }
 }

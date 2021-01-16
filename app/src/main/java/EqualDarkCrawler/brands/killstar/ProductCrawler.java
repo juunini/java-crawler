@@ -5,13 +5,13 @@ import EqualDarkCrawler.crawler.Size;
 
 public class ProductCrawler extends HTTPCrawler implements EqualDarkCrawler.crawler.ProductCrawler {
     @Override
-    public Boolean isValidPage() {
-        return null;
+    public boolean isValidPage() {
+        return !this.doc.select("[uk-grid] h2").isEmpty();
     }
 
     @Override
-    public Boolean isSoldOut() {
-        return null;
+    public boolean isSoldOut() {
+        return false;
     }
 
     @Override
