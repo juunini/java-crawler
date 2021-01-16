@@ -6,6 +6,11 @@ import org.jsoup.select.Elements;
 
 public class ProductCrawler extends HTTPCrawler implements EqualDarkCrawler.crawler.ProductCrawler {
     @Override
+    public void setTargetURL(String url) throws Exception {
+        getDocument(url);
+    }
+
+    @Override
     public boolean isValidPage() {
         return !this.doc
                 .select("[uk-grid] h2")

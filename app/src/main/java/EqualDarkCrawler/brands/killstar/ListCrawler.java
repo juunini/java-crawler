@@ -7,14 +7,19 @@ import java.util.stream.Collectors;
 
 public class ListCrawler extends HTTPCrawler implements EqualDarkCrawler.crawler.ListCrawler {
     @Override
-    public boolean isValidPage() {
+    public void setTargetURL(String url) throws Exception {
+        getDocument(url);
+    }
+
+    @Override
+    public boolean isValidPage() throws Exception {
         return !this.doc
                 .select("#mp-collection-grid > div")
                 .isEmpty();
     }
 
     @Override
-    public List<String> getProductsURL() {
+    public List<String> getProductsURL() throws Exception {
         return this.doc
                 .select("#mp-collection-grid > div")
                 .stream()

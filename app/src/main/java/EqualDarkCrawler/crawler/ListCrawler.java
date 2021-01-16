@@ -3,6 +3,7 @@ package EqualDarkCrawler.crawler;
 import java.util.List;
 
 public interface ListCrawler {
-    boolean isValidPage();
-    List<String> getProductsURL();
+    void setTargetURL(String url) throws Exception;
+    boolean isValidPage() throws Exception;
+    List<String> getProductsURL() throws Exception;
 }
