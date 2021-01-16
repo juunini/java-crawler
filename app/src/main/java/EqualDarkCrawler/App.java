@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class App {
-    public static List<String> getProductsURL() throws Exception {
+    public static List<String> getProductsURL() {
         Map<String, ListCrawler> crawlers = new HashMap<>();
         crawlers.put("killstar", new EqualDarkCrawler.brands.killstar.ListCrawler());
 
@@ -26,12 +26,24 @@ public class App {
         scan.close();
 
         ListCrawler listCrawler = crawlers.get(brand);
-        listCrawler.setTargetURL(targetURL);
 
-        return listCrawler.getProductsURL();
+        try {
+            listCrawler.setTargetURL(targetURL);
+        } catch (Exception e) {
+            System.out.println("target url parse failed");
+            System.exit(1);
+        }
+
+        try {
+            return listCrawler.getProductsURL();
+        } catch (Exception e) {
+            System.out.println("get products url failed");
+            System.exit(1);
+        }
+        return null;
     }
 
-    public static void getProduct() throws Exception {
+    public static void getProduct() {
         Map<String, ProductCrawler> crawlers = new HashMap<>();
         crawlers.put("killstar", new EqualDarkCrawler.brands.killstar.ProductCrawler());
 
@@ -45,7 +57,13 @@ public class App {
         scan.close();
 
         ProductCrawler productCrawler = crawlers.get(brand);
-        productCrawler.setTargetURL(targetURL);
+
+        try {
+            productCrawler.setTargetURL(targetURL);
+        } catch (Exception e) {
+            System.out.println("target url parse failed");
+            System.exit(1);
+        }
 
         boolean isValidPage = productCrawler.isValidPage();
         if (!isValidPage) {
