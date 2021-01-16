@@ -95,13 +95,16 @@ class ListCrawlerTest {
 
     @Test
     void failGetDocument() throws Exception {
-        setFailCaseServer();
+        setStatus500Server();
 
         ListCrawler crawler = new ListCrawler();
-        crawler.getDocument("http://localhost:" + PORT);
-        boolean isValidPage = crawler.isValidPage();
+        try {
+            crawler.getDocument("http://localhost:" + PORT);
+        } catch (Exception e) {
+            return;
+        }
 
-        assertFalse(isValidPage);
+        fail();
     }
 
     @Test
@@ -113,5 +116,16 @@ class ListCrawlerTest {
         boolean isValidPage = crawler.isValidPage();
 
         assertTrue(isValidPage);
+    }
+
+    @Test
+    void failIsValidPage() throws Exception {
+        setFailCaseServer();
+
+        ListCrawler crawler = new ListCrawler();
+        crawler.getDocument("http://localhost:" + PORT);
+        boolean isValidPage = crawler.isValidPage();
+
+        assertFalse(isValidPage);
     }
 }
