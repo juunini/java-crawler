@@ -28,6 +28,10 @@ dependencies {
 
     // jsoup
     implementation 'org.jsoup:jsoup:1.13.1'
+
+    // mock server
+    implementation("org.mock-server:mockserver-netty:5.11.1")
+    implementation("org.mock-server:mockserver-client-java:5.11.1")
 }
 
 application {

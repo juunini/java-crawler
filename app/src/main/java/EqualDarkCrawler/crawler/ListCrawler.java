@@ -1,6 +1,8 @@
 package EqualDarkCrawler.crawler;
 
+import java.util.List;
+
 public interface ListCrawler {
-    public Boolean isValidPage();
-    public String[] getProductsURL();
+    boolean isValidPage();
+    List<String> getProductsURL();
 }
