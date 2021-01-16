@@ -27,7 +27,8 @@ public class ListCrawler extends HTTPCrawler implements EqualDarkCrawler.crawler
                 .map(product -> "https://www.killstar.com" + product
                         .select("a")
                         .first()
-                        .attr("href").replace("collections/new-womens/", ""))
+                        .attr("href")
+                        .replace("collections/new-womens/", ""))
                 .collect(Collectors.toList());
     }
 }
