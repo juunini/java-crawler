@@ -98,25 +98,4 @@ public class ProductCrawlerTest {
                 );
     }
 
-    @Test
-    void successGetDocument() throws Exception {
-        setSaleProductServer();
-
-        ProductCrawler crawler = new ProductCrawler();
-        crawler.getDocument("http://localhost:" + PORT);
-    }
-
-    @Test
-    void failGetDocument() throws Exception {
-        setStatus500Server();
-
-        ProductCrawler crawler = new ProductCrawler();
-        try {
-            crawler.getDocument("http://localhost:" + PORT);
-        } catch (Exception e) {
-            return;
-        }
-
-        fail();
-    }
 }

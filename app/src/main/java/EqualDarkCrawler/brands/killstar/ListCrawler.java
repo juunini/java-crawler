@@ -1,17 +1,11 @@
 package EqualDarkCrawler.brands.killstar;
 
 import EqualDarkCrawler.crawler.HTTPCrawler;
-import org.jsoup.Jsoup;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class ListCrawler extends HTTPCrawler implements EqualDarkCrawler.crawler.ListCrawler {
-    @Override
-    public void getDocument(String url) throws Exception {
-        this.doc = Jsoup.connect(url).get();
-    }
-
     @Override
     public boolean isValidPage() {
         return !this.doc

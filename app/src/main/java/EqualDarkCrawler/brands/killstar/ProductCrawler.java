@@ -2,14 +2,8 @@ package EqualDarkCrawler.brands.killstar;
 
 import EqualDarkCrawler.crawler.HTTPCrawler;
 import EqualDarkCrawler.crawler.Size;
-import org.jsoup.Jsoup;
 
 public class ProductCrawler extends HTTPCrawler implements EqualDarkCrawler.crawler.ProductCrawler {
-    @Override
-    public void getDocument(String url) throws Exception {
-        this.doc = Jsoup.connect(url).get();
-    }
-
     @Override
     public Boolean isValidPage() {
         return null;

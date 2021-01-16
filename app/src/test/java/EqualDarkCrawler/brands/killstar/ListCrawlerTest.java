@@ -73,41 +73,6 @@ class ListCrawlerTest {
                 );
     }
 
-    private void setStatus500Server() {
-        new MockServerClient("localhost", PORT)
-                .when(
-                        request()
-                                .withMethod("GET")
-                                .withPath("/")
-                )
-                .respond(
-                        response()
-                                .withStatusCode(500)
-                );
-    }
-
-    @Test
-    void successGetDocument() throws Exception {
-        setSuccessCaseServer();
-
-        ListCrawler crawler = new ListCrawler();
-        crawler.getDocument("http://localhost:" + PORT);
-    }
-
-    @Test
-    void failGetDocument() throws Exception {
-        setStatus500Server();
-
-        ListCrawler crawler = new ListCrawler();
-        try {
-            crawler.getDocument("http://localhost:" + PORT);
-        } catch (Exception e) {
-            return;
-        }
-
-        fail();
-    }
-
     @Test
     void successIsValidPage() throws Exception {
         setSuccessCaseServer();
