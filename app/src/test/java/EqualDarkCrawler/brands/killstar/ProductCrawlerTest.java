@@ -86,7 +86,8 @@ public class ProductCrawlerTest {
                 );
     }
 
-    private void setStatus500Server() {
+    private void setSoldOutServer() {
+        byte[] responseBody = readHTMLFile("killstar_sold_out_product_page.html");
         new MockServerClient("localhost", PORT)
                 .when(
                         request()
@@ -95,7 +96,8 @@ public class ProductCrawlerTest {
                 )
                 .respond(
                         response()
-                                .withStatusCode(500)
+                                .withStatusCode(200)
+                                .withBody(responseBody)
                 );
     }
 
@@ -119,5 +121,27 @@ public class ProductCrawlerTest {
         boolean isValidPage = crawler.isValidPage();
 
         assertFalse(isValidPage);
+    }
+
+    @Test
+    public void falseIsSoldOut() throws Exception {
+        setSaleProductServer();
+
+        ProductCrawler crawler = new ProductCrawler();
+        crawler.getDocument("http://localhost:" + PORT);
+        boolean isSoldOut = crawler.isSoldOut();
+
+        assertFalse(isSoldOut);
+    }
+
+    @Test
+    public void trueIsSoldOut() throws Exception {
+        setSoldOutServer();
+
+        ProductCrawler crawler = new ProductCrawler();
+        crawler.getDocument("http://localhost:" + PORT);
+        boolean isSoldOut = crawler.isSoldOut();
+
+        assertTrue(isSoldOut);
     }
 }
