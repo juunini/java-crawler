@@ -12,6 +12,7 @@ import org.mockserver.integration.ClientAndServer;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 import static org.mockserver.model.HttpRequest.request;
 import static org.mockserver.model.HttpResponse.response;
@@ -127,5 +128,16 @@ class ListCrawlerTest {
         boolean isValidPage = crawler.isValidPage();
 
         assertFalse(isValidPage);
+    }
+
+    @Test
+    void successGetProductsURL() throws Exception {
+        setSuccessCaseServer();
+
+        ListCrawler crawler = new ListCrawler();
+        crawler.getDocument("http://localhost:" + PORT);
+        List<String> productsURL = crawler.getProductsURL();
+
+        assertEquals("https://www.killstar.com/collections/new-womens/products/judgement-long-sleeve-top", productsURL.get(0));
     }
 }
