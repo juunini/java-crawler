@@ -1,7 +1,6 @@
 package EqualDarkCrawler.brands.killstar;
 
 import EqualDarkCrawler.crawler.HTTPCrawler;
-import EqualDarkCrawler.crawler.Size;
 import EqualDarkCrawler.utils.GetFloatFromText;
 import org.jsoup.select.Elements;
 
@@ -44,20 +43,5 @@ public class ProductCrawler extends HTTPCrawler implements EqualDarkCrawler.craw
                 .last()
                 .text();
         return new GetFloatFromText().insert(priceStr);
-    }
-
-    @Override
-    public String[] getImages() {
-        return new String[0];
-    }
-
-    @Override
-    public Size[] getSizes() {
-        return new Size[0];
-    }
-
-    @Override
-    public String getDescription() {
-        return null;
     }
 }

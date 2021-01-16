@@ -6,7 +6,4 @@ public interface ProductCrawler {
     public String getName();
     public float getPrice();
     public float getSalePrice();
-    public String[] getImages();
-    public Size[] getSizes();
-    public String getDescription();
 }
