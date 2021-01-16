@@ -138,6 +138,6 @@ class ListCrawlerTest {
         crawler.getDocument("http://localhost:" + PORT);
         List<String> productsURL = crawler.getProductsURL();
 
-        assertEquals("https://www.killstar.com/collections/new-womens/products/judgement-long-sleeve-top", productsURL.get(0));
+        assertEquals("https://www.killstar.com/products/judgement-long-sleeve-top", productsURL.get(0));
     }
 }
