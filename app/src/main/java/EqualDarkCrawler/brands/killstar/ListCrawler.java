@@ -2,7 +2,6 @@ package EqualDarkCrawler.brands.killstar;
 
 import EqualDarkCrawler.crawler.HTTPCrawler;
 import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 
 public class ListCrawler extends HTTPCrawler implements EqualDarkCrawler.crawler.ListCrawler {
     @Override
@@ -11,8 +10,10 @@ public class ListCrawler extends HTTPCrawler implements EqualDarkCrawler.crawler
     }
 
     @Override
-    public Boolean isValidPage() {
-        return null;
+    public boolean isValidPage() {
+        return !this.doc
+                .select("#mp-collection-grid > div")
+                .isEmpty();
     }
 
     @Override

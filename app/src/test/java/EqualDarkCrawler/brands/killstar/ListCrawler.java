@@ -42,8 +42,7 @@ class ListCrawlerTest {
         }
     }
 
-    @Test
-    void successGetDocument() {
+    private void setSuccessCaseServer() {
         byte[] responseBody = readHTMLFile("killstar_products_page.html");
         new MockServerClient("localhost", PORT)
                 .when(
@@ -56,17 +55,24 @@ class ListCrawlerTest {
                                 .withStatusCode(200)
                                 .withBody(responseBody)
                 );
-
-        ListCrawler crawler = new ListCrawler();
-        try {
-            crawler.getDocument("http://localhost:" + PORT);
-        } catch (Exception e) {
-            fail(e);
-        }
     }
 
-    @Test
-    void failGetDocument() {
+    private void setFailCaseServer() {
+        byte[] responseBody = readHTMLFile("killstar_no_sale_product_page.html");
+        new MockServerClient("localhost", PORT)
+                .when(
+                        request()
+                                .withMethod("GET")
+                                .withPath("/")
+                )
+                .respond(
+                        response()
+                                .withStatusCode(200)
+                                .withBody(responseBody)
+                );
+    }
+
+    private void setStatus500Server() {
         new MockServerClient("localhost", PORT)
                 .when(
                         request()
@@ -77,13 +83,35 @@ class ListCrawlerTest {
                         response()
                                 .withStatusCode(500)
                 );
+    }
+
+    @Test
+    void successGetDocument() throws Exception {
+        setSuccessCaseServer();
 
         ListCrawler crawler = new ListCrawler();
-        try {
-            crawler.getDocument("http://localhost:" + PORT);
-        } catch (Exception e) {
-            return;
-        }
-        fail();
+        crawler.getDocument("http://localhost:" + PORT);
+    }
+
+    @Test
+    void failGetDocument() throws Exception {
+        setFailCaseServer();
+
+        ListCrawler crawler = new ListCrawler();
+        crawler.getDocument("http://localhost:" + PORT);
+        boolean isValidPage = crawler.isValidPage();
+
+        assertFalse(isValidPage);
+    }
+
+    @Test
+    void successIsValidPage() throws Exception {
+        setSuccessCaseServer();
+
+        ListCrawler crawler = new ListCrawler();
+        crawler.getDocument("http://localhost:" + PORT);
+        boolean isValidPage = crawler.isValidPage();
+
+        assertTrue(isValidPage);
     }
 }
